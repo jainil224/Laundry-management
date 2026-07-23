@@ -434,13 +434,6 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
                 </div>
               </form>
 
-              {/* Close Button */}
-              <button
-                onClick={() => setIsAddModalOpen(false)}
-                className="absolute top-4 right-4 w-7 h-7 rounded-full bg-neutral-100 text-neutral-600 hover:bg-neutral-200 flex items-center justify-center"
-              >
-                <X className="w-4 h-4" />
-              </button>
             </motion.div>
           </div>
         )}
