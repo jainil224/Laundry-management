@@ -1,0 +1,5 @@
+{
+  "name": "Room-Based Laundry Manager",
+  "description": "Hostel/PG room-tagged laundry manager: upload clothes, submit items for washing, track collection with claim tickets, and browse clothing manual.",
+  "requestFramePermissions": ["camera"]
+}

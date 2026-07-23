@@ -1,0 +1,212 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "User account profile and room details",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User unique auth UID"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "User full name"
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "Contact phone number"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "User email address"
+        },
+        "roomNumber": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "Hostel room number (e.g. B-204)"
+        },
+        "hostelBlock": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Hostel block name"
+        },
+        "profilePhotoUrl": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Profile picture URL"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Profile creation ISO timestamp"
+        }
+      },
+      "required": ["uid", "name", "roomNumber", "hostelBlock"]
+    },
+    "wardrobeItem": {
+      "title": "WardrobeItem",
+      "description": "User wardrobe item tagged with room and category",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Item ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID"
+        },
+        "roomNumber": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "Room number"
+        },
+        "categoryId": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Category ID (e.g., shirt, pant)"
+        },
+        "photoUrl": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Photo URL of clothing item"
+        },
+        "color": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Color description"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Custom label / nickname"
+        },
+        "addedAt": {
+          "type": "string",
+          "description": "ISO timestamp"
+        },
+        "inWash": {
+          "type": "boolean",
+          "description": "Flag indicating if item is currently in laundry wash"
+        }
+      },
+      "required": ["id", "userId", "roomNumber", "categoryId", "label"]
+    },
+    "laundryBatch": {
+      "title": "LaundryBatch",
+      "description": "Submitted wash batch with ticket ID and status tracking",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Batch ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID"
+        },
+        "roomNumber": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "Room number"
+        },
+        "itemIds": {
+          "type": "array",
+          "description": "List of wardrobe item IDs in this batch"
+        },
+        "itemCount": {
+          "type": "number",
+          "description": "Total items count"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["submitted", "in_wash", "ready", "collected"],
+          "description": "Current status"
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Submission ISO timestamp"
+        },
+        "expectedCollectionDate": {
+          "type": "string",
+          "description": "Expected completion ISO date"
+        },
+        "collectedAt": {
+          "type": "string",
+          "description": "Collection ISO timestamp"
+        },
+        "ticketId": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Claim ticket ID e.g. B204-0143"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 300,
+          "description": "Special washing instructions"
+        }
+      },
+      "required": ["id", "userId", "roomNumber", "itemIds", "itemCount", "status", "ticketId"]
+    },
+    "activityLog": {
+      "title": "ActivityLog",
+      "description": "Activity audit log for user actions",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Log ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "User UID"
+        },
+        "roomNumber": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "Room number"
+        },
+        "batchId": {
+          "type": "string",
+          "description": "Associated batch ID if any"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["submitted", "collected", "item_added", "profile_updated"],
+          "description": "Activity event type"
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 250,
+          "description": "Log description message"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO timestamp"
+        }
+      },
+      "required": ["id", "userId", "roomNumber", "type", "message", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/userProfile" },
+      "description": "User profiles"
+    },
+    "/wardrobe/{itemId}": {
+      "schema": { "$ref": "#/entities/wardrobeItem" },
+      "description": "Wardrobe items collection"
+    },
+    "/batches/{batchId}": {
+      "schema": { "$ref": "#/entities/laundryBatch" },
+      "description": "Laundry wash batches collection"
+    },
+    "/activityLogs/{logId}": {
+      "schema": { "$ref": "#/entities/activityLog" },
+      "description": "Activity audit log entries"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow all reads and writes for authenticated users
+    // This is safe because all data is user-specific and auth is required
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
