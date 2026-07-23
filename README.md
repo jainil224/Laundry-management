@@ -57,3 +57,13 @@ npm run dev
 # Run TypeScript / Lint check
 npm run lint
 ```
+
+---
+
+<div align="center">
+
+### Made with ❤️ by **Jainil Patel**
+
+*Building clean solutions for everyday problems.*
+
+</div>
