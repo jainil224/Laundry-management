@@ -177,6 +177,27 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           This will be used for your laundry orders.
         </p>
       </motion.div>
+
+      {/* Branding Footer */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="z-10 pb-2"
+      >
+        <p style={{
+          fontSize: '11px',
+          color: 'rgba(255,255,255,0.4)',
+          letterSpacing: '0.04em',
+          userSelect: 'none',
+          textAlign: 'center',
+        }}>
+          Made with{' '}
+          <span style={{ color: '#fb7185', fontSize: '13px' }}>♥</span>
+          {' '}by{' '}
+          <span style={{ color: 'rgba(255,255,255,0.75)', fontWeight: 700 }}>Jainil Patel</span>
+        </p>
+      </motion.div>
     </div>
   );
 };
