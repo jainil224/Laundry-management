@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Camera, Image as ImageIcon, X, Sparkles, Loader2, ArrowLeft } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -9,6 +9,12 @@ import { uploadClothingImage } from '../lib/firebase';
 interface WardrobeProps {
   onNavigate: (route: string) => void;
 }
+
+// Detect mobile/tablet so we can use native camera capture only on those devices
+const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
+  typeof navigator !== 'undefined' ? navigator.userAgent : ''
+);
+
 
 export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
   const {
@@ -31,21 +37,7 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
 
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const mediaStreamRef = useRef<MediaStream | null>(null);
 
-  const stopLiveCamera = () => {
-    if (mediaStreamRef.current) {
-      mediaStreamRef.current.getTracks().forEach((t) => t.stop());
-      mediaStreamRef.current = null;
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      stopLiveCamera();
-    };
-  }, []);
 
   const handlePhotoFileSelect = async (file: File | undefined) => {
     if (!file || !user) return;
@@ -288,11 +280,13 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
                   )}
 
                   {/* Hidden file inputs */}
+                  {/* On mobile: capture="environment" opens native camera directly */}
+                  {/* On desktop: no capture attribute → opens normal file picker */}
                   <input
                     ref={cameraInputRef}
                     type="file"
                     accept="image/*"
-                    capture="environment"
+                    {...(isMobile ? { capture: 'environment' } : {})}
                     onChange={(e) => handlePhotoFileSelect(e.target.files?.[0])}
                     className="hidden"
                   />
