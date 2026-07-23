@@ -9,27 +9,50 @@
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Montenegrin Gothic One', 'Dela Gothic One', sans-serif;
     background-color: var(--ink);
     color: var(--ink);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Montenegrin Gothic One', 'Dela Gothic One', sans-serif;
+    font-optical-sizing: auto;
   }
 
-  .font-mono, .font-space {
-    font-family: 'Space Mono', monospace;
+  .font-mono {
+    font-family: 'Montenegrin Gothic One', monospace;
   }
 
   .font-heading {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Montenegrin Gothic One', 'Dela Gothic One', sans-serif;
   }
 
   .font-sans {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montenegrin Gothic One', 'Dela Gothic One', sans-serif;
+  }
+
+  .font-gothic {
+    font-family: 'Montenegrin Gothic One', 'Dela Gothic One', sans-serif;
+  }
+
+  /* Utility classes for the other new fonts */
+  .font-orbitron {
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .font-audiowide {
+    font-family: 'Audiowide', sans-serif;
+  }
+
+  .font-lilita {
+    font-family: 'Lilita One', sans-serif;
+  }
+
+  .font-pixelify {
+    font-family: 'Pixelify Sans', sans-serif;
   }
 }
+
 
 /* =========================
    LIQUID GLASS — SUBTLE
