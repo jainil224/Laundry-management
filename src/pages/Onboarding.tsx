@@ -180,22 +180,33 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
 
       {/* Branding Footer */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
         className="z-10 pb-2"
       >
         <p style={{
-          fontSize: '11px',
-          color: 'rgba(255,255,255,0.4)',
-          letterSpacing: '0.04em',
+          fontSize: '13px',
+          fontWeight: 600,
+          color: '#ffffff',
+          letterSpacing: '0.05em',
           userSelect: 'none',
           textAlign: 'center',
+          textShadow: '0 0 12px rgba(255,255,255,0.6), 0 1px 4px rgba(0,0,0,0.4)',
         }}>
           Made with{' '}
-          <span style={{ color: '#fb7185', fontSize: '13px' }}>♥</span>
+          <span style={{
+            color: '#f43f5e',
+            fontSize: '15px',
+            filter: 'drop-shadow(0 0 4px #f43f5e)',
+          }}>♥</span>
           {' '}by{' '}
-          <span style={{ color: 'rgba(255,255,255,0.75)', fontWeight: 700 }}>Jainil Patel</span>
+          <span style={{
+            fontWeight: 800,
+            background: 'linear-gradient(90deg, #ffffff, #e2e8f0)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}>Jainil Patel</span>
         </p>
       </motion.div>
     </div>
