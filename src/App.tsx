@@ -86,6 +86,22 @@ function MainApp() {
         </AnimatePresence>
       </main>
 
+      {/* Made with love footer */}
+      <div className="text-center pb-1 pt-0">
+        <span style={{
+          fontSize: '11px',
+          color: '#a1a1aa',
+          fontFamily: 'inherit',
+          letterSpacing: '0.02em',
+          userSelect: 'none',
+        }}>
+          Made with{' '}
+          <span style={{ color: '#e11d48', fontSize: '13px' }}>♥</span>
+          {' '}by{' '}
+          <span style={{ fontWeight: 600, color: '#3f3f46' }}>Jainil Patel</span>
+        </span>
+      </div>
+
       {/* Bottom Floating Navigation Bar */}
       <BottomNav
         currentRoute={currentRoute}
