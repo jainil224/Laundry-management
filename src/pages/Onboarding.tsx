@@ -202,10 +202,11 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           }}>♥</span>
           {' '}by{' '}
           <span style={{
-            fontWeight: 800,
-            background: 'linear-gradient(90deg, #ffffff, #e2e8f0)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            fontWeight: 900,
+            fontSize: '14px',
+            color: '#ffffff',
+            textShadow: '0 0 16px rgba(255,255,255,0.9), 0 2px 8px rgba(0,0,0,0.5)',
+            letterSpacing: '0.02em',
           }}>Jainil Patel</span>
         </p>
       </motion.div>

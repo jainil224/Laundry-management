@@ -89,16 +89,21 @@ function MainApp() {
       {/* Made with love footer */}
       <div className="text-center pb-1 pt-0">
         <span style={{
-          fontSize: '11px',
-          color: '#a1a1aa',
+          fontSize: '12px',
+          color: '#71717a',
           fontFamily: 'inherit',
-          letterSpacing: '0.02em',
+          letterSpacing: '0.03em',
           userSelect: 'none',
         }}>
           Made with{' '}
-          <span style={{ color: '#e11d48', fontSize: '13px' }}>♥</span>
+          <span style={{ color: '#e11d48', fontSize: '14px' }}>♥</span>
           {' '}by{' '}
-          <span style={{ fontWeight: 600, color: '#3f3f46' }}>Jainil Patel</span>
+          <span style={{
+            fontWeight: 800,
+            fontSize: '13px',
+            color: '#09090b',
+            letterSpacing: '0.01em',
+          }}>Jainil Patel</span>
         </span>
       </div>
 
