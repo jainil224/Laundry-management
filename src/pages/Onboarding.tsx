@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Building, Hash, User, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Layers, Hash, User, ArrowRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 interface OnboardingProps {
@@ -15,14 +15,14 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   // Pre-fill from Google account data
   const [name, setName] = useState(user?.name || firebaseUser?.displayName || '');
   const [roomNumber, setRoomNumber] = useState('');
-  const [hostelBlock, setHostelBlock] = useState('');
+  const [floorNumber, setFloorNumber] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !roomNumber.trim() || !hostelBlock.trim()) {
-      setError('Please fill in your name, hostel block and room number.');
+    if (!name.trim() || !roomNumber.trim() || !floorNumber.trim()) {
+      setError('Please fill in your name, floor number and room number.');
       return;
     }
 
@@ -36,7 +36,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
         email: user?.email || firebaseUser?.email || '',
         phone: '',
         roomNumber: cleanRoom,
-        hostelBlock: hostelBlock.trim(),
+        floorNumber: floorNumber.trim(),
         profilePhotoUrl: user?.profilePhotoUrl || firebaseUser?.photoURL || '',
       });
       onComplete();
@@ -115,19 +115,20 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
             </div>
           </div>
 
-          {/* Hostel block + Room number side by side */}
+          {/* Floor Number + Room Number side by side */}
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-mono font-bold text-neutral-500 mb-1.5 uppercase tracking-wider">
-                HOSTEL BLOCK
+                FLOOR NUMBER
               </label>
               <div className="relative">
-                <Building className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+                <Layers className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
                 <input
-                  type="text"
-                  value={hostelBlock}
-                  onChange={(e) => setHostelBlock(e.target.value)}
-                  placeholder="e.g. B"
+                  type="number"
+                  min="0"
+                  value={floorNumber}
+                  onChange={(e) => setFloorNumber(e.target.value)}
+                  placeholder="e.g. 3"
                   className="w-full pl-10 pr-3 py-3.5 bg-neutral-50 rounded-2xl border border-neutral-300 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10 text-sm font-bold text-black placeholder-neutral-400 shadow-xs"
                   required
                 />
