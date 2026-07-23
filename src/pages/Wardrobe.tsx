@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Camera, Image as ImageIcon, X, Sparkles, Loader2, ArrowLeft, RefreshCw, Scan, Target, Maximize2 } from 'lucide-react';
+import { Camera, Image as ImageIcon, X, Sparkles, Loader2, ArrowLeft } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ClothCard } from '../components/ClothCard';
 import { WardrobeItem } from '../types';
@@ -29,69 +29,16 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
-  // Live Camera State & AI Cloth Focus Outline
-  const [isLiveCameraActive, setIsLiveCameraActive] = useState(false);
-  const [facingMode, setFacingMode] = useState<'environment' | 'user'>('environment');
-  const [isClothFocusEnabled, setIsClothFocusEnabled] = useState(true);
-  const [focusPoint, setFocusPoint] = useState<{ x: number; y: number } | null>(null);
-
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaStreamRef = useRef<MediaStream | null>(null);
-
-  const startLiveCamera = async (mode: 'environment' | 'user' = facingMode) => {
-    try {
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        cameraInputRef.current?.click();
-        return;
-      }
-      if (mediaStreamRef.current) {
-        mediaStreamRef.current.getTracks().forEach((t) => t.stop());
-      }
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: mode, width: { ideal: 1280 }, height: { ideal: 960 } },
-      });
-      mediaStreamRef.current = stream;
-      setIsLiveCameraActive(true);
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play().catch(() => {});
-      }
-    } catch (err) {
-      console.warn('Live camera error, falling back to native picker:', err);
-      setIsLiveCameraActive(false);
-      cameraInputRef.current?.click();
-    }
-  };
 
   const stopLiveCamera = () => {
     if (mediaStreamRef.current) {
       mediaStreamRef.current.getTracks().forEach((t) => t.stop());
       mediaStreamRef.current = null;
     }
-    setIsLiveCameraActive(false);
-  };
-
-  const capturePhotoFromLiveCamera = () => {
-    if (!videoRef.current) return;
-    const video = videoRef.current;
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      setNewPhotoUrl(dataUrl);
-      stopLiveCamera();
-    }
-  };
-
-  const toggleCameraFacing = () => {
-    const nextMode = facingMode === 'environment' ? 'user' : 'environment';
-    setFacingMode(nextMode);
-    startLiveCamera(nextMode);
   };
 
   useEffect(() => {
@@ -287,133 +234,9 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
               </div>
 
               <form onSubmit={handleAddItemSubmit} className="space-y-4">
-                {/* 50/50 Split Box / Live Camera / Photo Preview */}
+                {/* 50/50 Split Box / Photo Preview */}
                 <div className="bg-neutral-100 border border-neutral-300 rounded-2xl p-2 relative overflow-hidden">
-                  {isLiveCameraActive ? (
-                    <div 
-                      className="relative aspect-4/3 w-full rounded-xl overflow-hidden bg-black flex items-center justify-center cursor-crosshair select-none"
-                      onClick={(e) => {
-                        const rect = e.currentTarget.getBoundingClientRect();
-                        setFocusPoint({
-                          x: e.clientX - rect.left,
-                          y: e.clientY - rect.top,
-                        });
-                      }}
-                    >
-                      <video
-                        ref={videoRef}
-                        playsInline
-                        autoPlay
-                        muted
-                        className="w-full h-full object-cover"
-                      />
-                      
-                      {/* Top Overlay Controls */}
-                      <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between z-20 pointer-events-auto">
-                        <button
-                          type="button"
-                          onClick={toggleCameraFacing}
-                          className="w-8 h-8 rounded-full bg-black/60 text-white backdrop-blur-md flex items-center justify-center border border-white/20 active:scale-95 transition-transform"
-                          title="Flip Camera"
-                        >
-                          <RefreshCw className="w-4 h-4" />
-                        </button>
-
-                        {/* AI Cloth Focus Toggle Button */}
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setIsClothFocusEnabled(!isClothFocusEnabled);
-                          }}
-                          className={`px-3 py-1 rounded-full text-xs font-bold font-mono flex items-center gap-1.5 backdrop-blur-md border transition-all ${
-                            isClothFocusEnabled
-                              ? 'bg-emerald-500/80 text-white border-emerald-400 shadow-md'
-                              : 'bg-black/60 text-white/70 border-white/20'
-                          }`}
-                        >
-                          <Scan className={`w-3.5 h-3.5 ${isClothFocusEnabled ? 'animate-pulse' : ''}`} />
-                          <span>{isClothFocusEnabled ? 'AI OUTLINE ON' : 'AI OUTLINE OFF'}</span>
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            stopLiveCamera();
-                          }}
-                          className="w-8 h-8 rounded-full bg-black/60 text-white backdrop-blur-md flex items-center justify-center border border-white/20 active:scale-95 transition-transform"
-                          title="Close Camera"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-
-                      {/* AI Cloth Detection Bounding Box & Outline */}
-                      {isClothFocusEnabled && (
-                        <div className="absolute inset-0 pointer-events-none flex items-center justify-center p-6 z-10">
-                          <motion.div 
-                            initial={{ scale: 0.95, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className="relative w-4/5 h-4/5 rounded-2xl border-2 border-dashed border-emerald-400/80 shadow-[0_0_15px_rgba(52,211,153,0.3)] flex flex-col justify-between p-2 overflow-hidden"
-                          >
-                            {/* Corner Bracket Accents */}
-                            <div className="absolute top-0 left-0 w-5 h-5 border-t-4 border-l-4 border-emerald-400 rounded-tl-lg" />
-                            <div className="absolute top-0 right-0 w-5 h-5 border-t-4 border-r-4 border-emerald-400 rounded-tr-lg" />
-                            <div className="absolute bottom-0 left-0 w-5 h-5 border-b-4 border-l-4 border-emerald-400 rounded-bl-lg" />
-                            <div className="absolute bottom-0 right-0 w-5 h-5 border-b-4 border-r-4 border-emerald-400 rounded-br-lg" />
-
-                            {/* Scanning Laser Line */}
-                            <motion.div
-                              animate={{ y: ['0%', '200%', '0%'] }}
-                              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-                              className="w-full h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_8px_#34d399]"
-                            />
-
-                            {/* Top Badge */}
-                            <div className="self-center bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-mono font-bold text-emerald-400 border border-emerald-500/40 flex items-center gap-1">
-                              <Target className="w-3 h-3 text-emerald-400 animate-spin" />
-                              <span>CLOTH DETECTED • 98%</span>
-                            </div>
-
-                            {/* Bottom Instruction */}
-                            <div className="self-center bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full text-[9px] font-mono text-white/80">
-                              Center cloth in frame
-                            </div>
-                          </motion.div>
-                        </div>
-                      )}
-
-                      {/* Tap to Focus reticle */}
-                      {focusPoint && (
-                        <motion.div
-                          initial={{ scale: 1.5, opacity: 1 }}
-                          animate={{ scale: 1, opacity: 0 }}
-                          transition={{ duration: 0.8 }}
-                          style={{ left: focusPoint.x - 20, top: focusPoint.y - 20 }}
-                          className="absolute w-10 h-10 border-2 border-emerald-400 rounded-full pointer-events-none z-30 flex items-center justify-center"
-                        >
-                          <div className="w-2 h-2 bg-emerald-400 rounded-full" />
-                        </motion.div>
-                      )}
-
-                      {/* Camera Shutter Snap Button */}
-                      <div className="absolute bottom-3 inset-x-0 flex items-center justify-center z-20 pointer-events-auto">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            capturePhotoFromLiveCamera();
-                          }}
-                          className="w-14 h-14 rounded-full bg-white text-black border-4 border-black/30 shadow-xl flex items-center justify-center active:scale-90 transition-transform group"
-                        >
-                          <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center text-white">
-                            <Camera className="w-5 h-5" />
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-                  ) : newPhotoUrl ? (
+                  {newPhotoUrl ? (
                     <div className="relative aspect-4/3 w-full rounded-xl overflow-hidden bg-neutral-200">
                       <img
                         src={newPhotoUrl}
@@ -438,10 +261,10 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 divide-x divide-neutral-300">
-                      {/* Camera Button */}
+                      {/* Camera Button — opens native phone camera */}
                       <button
                         type="button"
-                        onClick={() => startLiveCamera()}
+                        onClick={() => cameraInputRef.current?.click()}
                         className="flex flex-col items-center justify-center p-4 hover:bg-black/5 transition-colors group"
                       >
                         <div className="w-12 h-12 rounded-2xl bg-white text-black flex items-center justify-center mb-2 group-hover:scale-105 transition-transform shadow-xs">
