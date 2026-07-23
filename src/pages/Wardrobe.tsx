@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Camera, Image as ImageIcon, X, Sparkles, Loader2, ArrowLeft } from 'lucide-react';
+import { Camera, Image as ImageIcon, X, Sparkles, Loader2, ArrowLeft, RefreshCw } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ClothCard } from '../components/ClothCard';
 import { WardrobeItem } from '../types';
@@ -38,6 +38,71 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
+  // In-app live camera (used on desktop/laptop)
+  const [isLiveCameraActive, setIsLiveCameraActive] = useState(false);
+  const [facingMode, setFacingMode] = useState<'environment' | 'user'>('environment');
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+
+  const startLiveCamera = async (mode: 'environment' | 'user' = facingMode) => {
+    try {
+      if (mediaStreamRef.current) {
+        mediaStreamRef.current.getTracks().forEach((t) => t.stop());
+      }
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: mode, width: { ideal: 1280 }, height: { ideal: 960 } },
+        audio: false,
+      });
+      mediaStreamRef.current = stream;
+      setIsLiveCameraActive(true);
+      // Wait for next render so videoRef is mounted
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.play().catch(() => {});
+        }
+      }, 50);
+    } catch (err) {
+      console.warn('Webcam unavailable, falling back to file picker:', err);
+      cameraInputRef.current?.click();
+    }
+  };
+
+  const stopLiveCamera = () => {
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach((t) => t.stop());
+      mediaStreamRef.current = null;
+    }
+    setIsLiveCameraActive(false);
+  };
+
+  const capturePhotoFromLiveCamera = () => {
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const file = new File([blob], 'webcam-photo.jpg', { type: 'image/jpeg' });
+        handlePhotoFileSelect(file);
+        stopLiveCamera();
+      }, 'image/jpeg', 0.9);
+    }
+  };
+
+  const toggleCameraFacing = () => {
+    const next = facingMode === 'environment' ? 'user' : 'environment';
+    setFacingMode(next);
+    startLiveCamera(next);
+  };
+
+  useEffect(() => {
+    return () => stopLiveCamera();
+  }, []);
 
   const handlePhotoFileSelect = async (file: File | undefined) => {
     if (!file || !user) return;
@@ -226,9 +291,51 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
               </div>
 
               <form onSubmit={handleAddItemSubmit} className="space-y-4">
-                {/* 50/50 Split Box / Photo Preview */}
+                {/* Camera view / Photo Preview / Picker */}
                 <div className="bg-neutral-100 border border-neutral-300 rounded-2xl p-2 relative overflow-hidden">
-                  {newPhotoUrl ? (
+                  {isLiveCameraActive ? (
+                    /* ── Clean In-App Webcam View (desktop) ── */
+                    <div className="relative aspect-4/3 w-full rounded-xl overflow-hidden bg-black">
+                      <video
+                        ref={videoRef}
+                        playsInline
+                        autoPlay
+                        muted
+                        className="w-full h-full object-cover"
+                      />
+                      {/* Top controls */}
+                      <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between z-20">
+                        <button
+                          type="button"
+                          onClick={toggleCameraFacing}
+                          className="w-8 h-8 rounded-full bg-black/60 text-white backdrop-blur-md flex items-center justify-center border border-white/20 active:scale-95 transition-transform"
+                          title="Flip Camera"
+                        >
+                          <RefreshCw className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={stopLiveCamera}
+                          className="w-8 h-8 rounded-full bg-black/60 text-white backdrop-blur-md flex items-center justify-center border border-white/20 active:scale-95 transition-transform"
+                          title="Close Camera"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                      {/* Shutter button */}
+                      <div className="absolute bottom-3 inset-x-0 flex items-center justify-center z-20">
+                        <button
+                          type="button"
+                          onClick={capturePhotoFromLiveCamera}
+                          className="w-16 h-16 rounded-full bg-white border-4 border-black/20 shadow-xl flex items-center justify-center active:scale-90 transition-transform"
+                        >
+                          <div className="w-11 h-11 rounded-full bg-black flex items-center justify-center text-white">
+                            <Camera className="w-5 h-5" />
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  ) : newPhotoUrl ? (
                     <div className="relative aspect-4/3 w-full rounded-xl overflow-hidden bg-neutral-200">
                       <img
                         src={newPhotoUrl}
@@ -253,10 +360,10 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 divide-x divide-neutral-300">
-                      {/* Camera Button — opens native phone camera */}
+                      {/* Camera Button: mobile → native camera, desktop → in-app webcam */}
                       <button
                         type="button"
-                        onClick={() => cameraInputRef.current?.click()}
+                        onClick={() => isMobile ? cameraInputRef.current?.click() : startLiveCamera()}
                         className="flex flex-col items-center justify-center p-4 hover:bg-black/5 transition-colors group"
                       >
                         <div className="w-12 h-12 rounded-2xl bg-white text-black flex items-center justify-center mb-2 group-hover:scale-105 transition-transform shadow-xs">
