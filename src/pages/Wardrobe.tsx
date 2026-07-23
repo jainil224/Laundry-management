@@ -422,17 +422,6 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
                   </select>
                 </div>
 
-                {/* Custom Cloth Name Input */}
-                <div>
-                  <input
-                    type="text"
-                    value={newLabel}
-                    onChange={(e) => setNewLabel(e.target.value)}
-                    placeholder="Cloth Name (optional, e.g. T-SHIRT)"
-                    className="w-full px-4 py-2.5 bg-neutral-100 border border-neutral-300 rounded-xl text-xs font-medium text-black focus:outline-none focus:border-black"
-                  />
-                </div>
-
                 {/* Save Button */}
                 <div className="pt-2">
                   <button
