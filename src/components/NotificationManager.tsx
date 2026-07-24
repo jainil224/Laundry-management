@@ -47,7 +47,7 @@ export const NotificationManager: React.FC = () => {
     if (result === 'granted') {
       sendNotification('🧺 Laundry Reminders Active!', {
         body: 'You will receive reminders on Mondays and Thursdays at 5:00 PM.',
-        icon: 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784836807/ChatGPT_Image_Jul_24_2026_01_28_20_AM_1_mqcgeb.png',
+        icon: 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png',
       });
     }
   };
@@ -72,7 +72,7 @@ export const NotificationManager: React.FC = () => {
         if (lastSentDate !== todayStr) {
           sendNotification('🧺 Laundry Collection Reminder', {
             body: 'Laundry collection is now open.\nPlease collect your clean clothes and submit your dirty laundry for the next washing cycle.\n\nThank you for your cooperation.',
-            icon: 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784836807/ChatGPT_Image_Jul_24_2026_01_28_20_AM_1_mqcgeb.png',
+            icon: 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png',
             requireInteraction: true,
           });
           localStorage.setItem('lastReminderDate', todayStr);
