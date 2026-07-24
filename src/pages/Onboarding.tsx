@@ -178,7 +178,37 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
         </p>
       </motion.div>
 
-
+      {/* Branding Footer */}
+      <motion.div
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="z-10 pb-2"
+      >
+        <p style={{
+          fontSize: '13px',
+          fontWeight: 600,
+          color: '#ffffff',
+          letterSpacing: '0.05em',
+          userSelect: 'none',
+          textAlign: 'center',
+          textShadow: '0 0 12px rgba(255,255,255,0.6), 0 1px 4px rgba(0,0,0,0.4)',
+        }}>
+          Made with{' '}
+          <span style={{
+            color: '#f43f5e',
+            fontSize: '15px',
+            filter: 'drop-shadow(0 0 4px #f43f5e)',
+          }}>♥</span>
+          {' '}by{' '}
+          <span style={{
+            fontWeight: 900,
+            fontSize: '14px',
+            color: '#000000',
+            letterSpacing: '0.02em',
+          }}>Jainil Patel</span>
+        </p>
+      </motion.div>
     </div>
   );
 };
