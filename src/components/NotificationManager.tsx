@@ -43,13 +43,6 @@ export const NotificationManager: React.FC = () => {
     const result = await Notification.requestPermission();
     setPermission(result);
     setShowPrompt(false);
-
-    if (result === 'granted') {
-      sendNotification('🧺 Laundry Reminders Active!', {
-        body: 'You will receive reminders on Mondays and Thursdays at 5:00 PM.',
-        icon: 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png',
-      });
-    }
   };
 
   // Schedule Logic

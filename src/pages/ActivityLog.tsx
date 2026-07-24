@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Clock, Tag, Sparkles, Plus, CheckCircle2, History } from 'lucide-react';
+import { Clock, Tag, Sparkles, Plus, CheckCircle2, History, BellRing, PackageCheck, PackagePlus } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ActivityLogItem } from '../types';
 
@@ -11,14 +11,15 @@ interface ActivityLogProps {
 export const ActivityLog: React.FC<ActivityLogProps> = ({ onNavigate }) => {
   const { activityLogs, user } = useApp();
 
-  const roomNum = user?.roomNumber || 'B-204';
+  const roomNum = user?.roomNumber || '207';
 
   const getActivityIcon = (type: ActivityLogItem['type']) => {
     switch (type) {
       case 'submitted':
-        return <Tag className="w-4 h-4 text-[#F4796F]" />;
+        return <PackagePlus className="w-4 h-4 text-[#F4796F]" />;
       case 'collected':
-        return <CheckCircle2 className="w-4 h-4 text-[#2FBF9F]" />;
+      case 'washed':
+        return <PackageCheck className="w-4 h-4 text-[#2FBF9F]" />;
       case 'item_added':
         return <Plus className="w-4 h-4 text-[#FFC93C]" />;
       default:
@@ -31,11 +32,27 @@ export const ActivityLog: React.FC<ActivityLogProps> = ({ onNavigate }) => {
       case 'submitted':
         return 'bg-[#F4796F]/20 text-[#23241F] border-[#F4796F]/40';
       case 'collected':
+      case 'washed':
         return 'bg-[#2FBF9F]/20 text-[#23241F] border-[#2FBF9F]/40';
       case 'item_added':
         return 'bg-[#FFC93C]/30 text-[#23241F] border-[#FFC93C]/50';
       default:
         return 'bg-[#6C7BFF]/20 text-[#23241F] border-[#6C7BFF]/40';
+    }
+  };
+
+  const getLogTypeBadgeText = (type: ActivityLogItem['type']) => {
+    switch (type) {
+      case 'submitted':
+        return 'GAVE CLOTHES';
+      case 'collected':
+        return 'RECEIVED CLOTHES';
+      case 'washed':
+        return 'WASHED';
+      case 'item_added':
+        return 'ITEM ADDED';
+      default:
+        return type.toUpperCase();
     }
   };
 
@@ -63,9 +80,11 @@ export const ActivityLog: React.FC<ActivityLogProps> = ({ onNavigate }) => {
         </div>
       </div>
 
+
+
       {/* Activity Timeline List */}
       {activityLogs.length === 0 ? (
-        <div className="bg-white rounded-3xl p-8 sm:p-10 text-center border border-[#23241F]/10 shadow-sm space-y-4 mt-6">
+        <div className="bg-white rounded-3xl p-8 sm:p-10 text-center border border-[#23241F]/10 shadow-sm space-y-4 mt-4">
           <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#6C7BFF]/10 to-[#6C7BFF]/5 text-[#6C7BFF] mx-auto flex items-center justify-center border border-[#6C7BFF]/20 shadow-inner">
             <History className="w-10 h-10 drop-shadow-sm" />
           </div>
@@ -96,7 +115,7 @@ export const ActivityLog: React.FC<ActivityLogProps> = ({ onNavigate }) => {
                 key={log.id}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="relative bg-white rounded-2xl p-4 shadow-sm border border-[#23241F]/10 space-y-1.5"
+                className="relative bg-white rounded-2xl p-4 shadow-sm border border-[#23241F]/10 space-y-2"
               >
                 {/* Timeline Dot Icon */}
                 <div
@@ -108,20 +127,21 @@ export const ActivityLog: React.FC<ActivityLogProps> = ({ onNavigate }) => {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-[#23241F]/5 text-[#23241F]">
-                    {log.type.toUpperCase()}
+                  <span className="text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-md bg-[#23241F]/5 text-[#23241F] tracking-wide">
+                    {getLogTypeBadgeText(log.type)}
                   </span>
-                  <span className="text-[10px] font-mono text-[#23241F]/50">
+                  <span className="text-[10px] font-mono font-bold text-[#23241F]/60">
                     {dateStr} • {timeStr}
                   </span>
                 </div>
 
-                <p className="font-heading font-semibold text-sm text-[#23241F]">
+                <p className="font-heading font-extrabold text-sm text-[#23241F] tracking-tight">
                   {log.message}
                 </p>
 
-                <div className="pt-1 flex items-center space-x-1 text-[10px] font-mono text-[#23241F]/50">
+                <div className="pt-1 flex items-center justify-between text-[10px] font-mono text-[#23241F]/50 border-t border-neutral-100 mt-2">
                   <span>ROOM TAG: #{log.roomNumber || roomNum}</span>
+                  <span className="font-semibold text-neutral-400">Date & Time Logged</span>
                 </div>
               </motion.div>
             );
