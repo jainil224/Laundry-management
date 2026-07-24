@@ -18,6 +18,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [authTab, setAuthTab] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState('');
   const [authError, setAuthError] = useState<string | null>(null);
 
@@ -44,6 +46,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
       if (authTab === 'register') {
         if (!email.includes('@') || password.length < 6) {
           throw new Error('Please enter a valid email and a password of at least 6 characters.');
+        }
+        if (password !== confirmPassword) {
+          throw new Error('Passwords do not match.');
         }
         await signUpWithEmail(email.trim(), password, name.trim());
       } else {
@@ -222,13 +227,22 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono font-bold text-neutral-600 mb-1">
-                  PASSWORD
-                </label>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-[11px] font-mono font-bold text-neutral-600">
+                    {authTab === 'register' ? 'CREATE PASSWORD' : 'PASSWORD'}
+                  </label>
+                  <button 
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="text-[10px] font-medium text-blue-600 hover:text-blue-800 focus:outline-none"
+                  >
+                    {showPassword ? 'Hide password' : 'Show password'}
+                  </button>
+                </div>
                 <div className="relative">
                   <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
@@ -237,6 +251,25 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   />
                 </div>
               </div>
+
+              {authTab === 'register' && (
+                <div>
+                  <label className="block text-[11px] font-mono font-bold text-neutral-600 mb-1">
+                    RE-TYPE PASSWORD <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="w-full pl-9 pr-3 py-2.5 bg-neutral-50 rounded-xl border border-neutral-300 text-xs font-medium text-black focus:outline-none focus:border-black"
+                      required={authTab === 'register'}
+                    />
+                  </div>
+                </div>
+              )}
 
               <button
                 type="submit"
