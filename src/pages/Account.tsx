@@ -68,11 +68,14 @@ export const Account: React.FC<AccountProps> = ({ onNavigate, onOpenOnboarding }
           <div className="flex-shrink-0">
             <BorderGlow
               borderRadius={16}
-              glowRadius={15}
-              glowIntensity={0.8}
+              glowRadius={12}
+              glowIntensity={1.2}
+              coneSpread={25}
               animated={true}
               backgroundColor="#000000"
-              className="w-16 h-16 flex items-center justify-center p-0 shadow-md"
+              glowColor="270 100 60"
+              colors={['#a855f7', '#d946ef', '#c084fc']}
+              className="w-16 h-16 flex items-center justify-center p-0 shadow-2xl"
             >
               {user?.profilePhotoUrl || firebaseUser?.photoURL ? (
                 <img
