@@ -33,9 +33,12 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           <div>
             {/* Room pill */}
             <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 mb-3 border border-white/15">
-              <div className="flex items-center space-x-1 mt-1 font-mono">
-                <span className="text-[10px] bg-black/10 px-2 py-0.5 rounded uppercase font-bold tracking-wider">
-                  {floorNumber ? `FL ${floorNumber}` : 'FL 1'} · RM {roomNum}
+              <div className="flex items-center space-x-1 font-mono">
+                <span className="text-[10px] font-bold text-neutral-300 uppercase">
+                  {floorNumber ? `Floor Number - ${floorNumber}` : 'Floor Number - 1'}
+                </span>
+                <span className="text-[10px] font-bold text-white px-2 py-0.5 bg-black/30 rounded uppercase tracking-wider">
+                  Room Number - {roomNum}
                 </span>
               </div>
             </div>

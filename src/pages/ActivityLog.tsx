@@ -53,7 +53,7 @@ export const ActivityLog: React.FC<ActivityLogProps> = ({ onNavigate }) => {
                 Activity Log
               </h2>
               <span className="shrink-0 bg-[#2FBF9F] text-[#23241F] px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold uppercase tracking-widest shadow-sm">
-                RM #{roomNum}
+                Room Number - {roomNum}
               </span>
             </div>
             <p className="text-[11px] text-[#F7F5F1]/70 mt-1 font-medium tracking-wide truncate">

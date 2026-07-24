@@ -79,10 +79,10 @@ export const Account: React.FC<AccountProps> = ({ onNavigate, onOpenOnboarding }
           <div className="flex-1">
             <div className="flex items-center space-x-2">
               <span className="bg-black text-white px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold">
-                RM #{user?.roomNumber || '207'}
+                Room Number - {user?.roomNumber || '207'}
               </span>
               <span className="text-xs font-mono font-bold text-neutral-500 uppercase">
-                {user?.floorNumber ? `FLOOR ${user.floorNumber}` : 'FLOOR 1'}
+                {user?.floorNumber ? `Floor Number - ${user.floorNumber}` : 'Floor Number - 1'}
               </span>
             </div>
 

@@ -204,8 +204,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           <span style={{
             fontWeight: 900,
             fontSize: '14px',
-            color: '#ffffff',
-            textShadow: '0 0 16px rgba(255,255,255,0.9), 0 2px 8px rgba(0,0,0,0.5)',
+            color: '#000000',
             letterSpacing: '0.02em',
           }}>Jainil Patel</span>
         </p>

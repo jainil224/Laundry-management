@@ -144,10 +144,10 @@ function MainApp() {
           <span style={{ color: '#e11d48', fontSize: '14px' }}>♥</span>
           {' '}by{' '}
           <span style={{
-            fontWeight: 800,
-            fontSize: '13px',
-            color: '#09090b',
-            letterSpacing: '0.01em',
+            fontWeight: 900,
+            fontSize: '14px',
+            color: '#000000',
+            letterSpacing: '0.02em',
           }}>Jainil Patel</span>
         </span>
       </div>
