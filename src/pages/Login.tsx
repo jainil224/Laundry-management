@@ -7,7 +7,7 @@ interface LoginProps {
   onLogin: () => void;
 }
 
-const BRAND_LOGO_URL = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784828543/ChatGPT_Image_Jul_23_2026_11_11_54_PM_axvdkp.png';
+const BRAND_LOGO_URL = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png';
 
 export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const { signInWithGoogle, signUpWithEmail, signInWithEmail } = useApp();
@@ -91,7 +91,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <img
               src={BRAND_LOGO_URL}
               alt="Laundrify Logo"
-              className="w-full h-full object-cover scale-[2.7] translate-y-1"
+              className="w-full h-full object-contain p-1"
             />
           </div>
         </div>

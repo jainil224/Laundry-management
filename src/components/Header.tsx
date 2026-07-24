@@ -9,7 +9,7 @@ interface HeaderProps {
   onNavigate?: (route: string) => void;
 }
 
-const BRAND_LOGO_URL = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784828543/ChatGPT_Image_Jul_23_2026_11_11_54_PM_axvdkp.png';
+const BRAND_LOGO_URL = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png';
 
 export const Header: React.FC<HeaderProps> = ({ title, showBack, onBack, onNavigate }) => {
   const { user, getReadyBatchesCount } = useApp();
@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({ title, showBack, onBack, onNavig
                 <img
                   src={BRAND_LOGO_URL}
                   alt="Laundrify Logo"
-                  className="w-full h-full object-cover scale-[2.7] translate-y-0.5"
+                  className="w-full h-full object-contain p-0.5"
                 />
               </div>
               <div className="flex flex-col">

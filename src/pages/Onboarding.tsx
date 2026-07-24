@@ -7,7 +7,7 @@ interface OnboardingProps {
   onComplete: () => void;
 }
 
-const ONBOARDING_HEADER_IMAGE = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784828543/ChatGPT_Image_Jul_23_2026_11_12_00_PM_baamyk.png';
+const ONBOARDING_HEADER_IMAGE = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png';
 
 export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const { completeOnboarding, user, firebaseUser } = useApp();
@@ -66,7 +66,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           <img
             src={ONBOARDING_HEADER_IMAGE}
             alt="Room Setup Tag"
-            className="w-full h-full object-cover scale-110"
+            className="w-full h-full object-contain p-1"
           />
         </div>
 
