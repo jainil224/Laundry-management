@@ -64,8 +64,8 @@ export const Header: React.FC<HeaderProps> = ({ title, showBack, onBack, onNavig
               onClick={() => onNavigate && onNavigate('account')}
               className="bg-white text-black hover:bg-neutral-100 px-3 py-1.5 rounded-full text-xs font-mono font-extrabold tracking-wider flex items-center space-x-1 shadow-md active:scale-95 transition-all border border-white/20"
             >
-              <span className="text-[10px] font-bold text-neutral-500">RM</span>
-              <span>#{user.roomNumber || '207'}</span>
+              <span className="text-[10px] font-bold text-neutral-500">Room Number -</span>
+              <span>{user.roomNumber || '207'}</span>
             </button>
           )}
 
