@@ -231,8 +231,12 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
       {/* Wardrobe 2-Column Grid */}
       {filteredWardrobe.length === 0 ? (
         <div className="bg-white rounded-3xl p-8 text-center border border-neutral-200 shadow-xs space-y-3 mt-4">
-          <div className="w-12 h-12 rounded-2xl bg-black text-white mx-auto flex items-center justify-center">
-            <Sparkles className="w-6 h-6" />
+          <div className="w-24 h-24 mx-auto flex items-center justify-center">
+            <img 
+              src="https://res.cloudinary.com/ju7wkm1y/image/upload/v1784869572/hangers-cut-out-Photoroom_yx8pn4.png" 
+              alt="No clothes yet" 
+              className="w-full h-full object-contain"
+            />
           </div>
           <h3 className="font-extrabold text-base text-black">
             {wardrobe.length === 0 ? 'No Clothes Yet' : 'No Items Found'}

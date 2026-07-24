@@ -234,6 +234,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  const handleSignUpWithEmail = async (email: string, pass: string, name: string) => {
+    const userCred = await signUpWithEmail(email, pass, name);
+    if (userCred && name) {
+      // Overwrite the default "Hostel Student" name that onAuthStateChanged might have set
+      await setDoc(doc(db, 'users', userCred.uid), { name }, { merge: true });
+      setUser((prev) => prev ? { ...prev, name } : null);
+    }
+  };
+
   const updateUser = async (data: Partial<UserProfile>) => {
     if (!firebaseUser) return;
     const path = `users/${firebaseUser.uid}`;
@@ -602,7 +611,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         activityLogs,
         categories: DEFAULT_CATEGORIES,
         signInWithGoogle,
-        signUpWithEmail,
+        signUpWithEmail: handleSignUpWithEmail,
         signInWithEmail,
         signOutUser: handleSignOutUser,
         updateUser,
