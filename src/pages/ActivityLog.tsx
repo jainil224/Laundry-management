@@ -66,8 +66,16 @@ export const ActivityLog: React.FC<ActivityLogProps> = ({ onNavigate }) => {
 
       {/* Activity Timeline List */}
       {activityLogs.length === 0 ? (
-        <div className="bg-white rounded-2xl p-8 text-center border border-[#23241F]/10 space-y-2">
-          <p className="text-xs text-[#23241F]/60">No activity recorded yet.</p>
+        <div className="bg-white rounded-3xl p-8 text-center border border-[#23241F]/10 shadow-sm space-y-3 mt-4">
+          <div className="w-16 h-16 rounded-2xl bg-[#6C7BFF]/10 text-[#6C7BFF] mx-auto flex items-center justify-center">
+            <History className="w-8 h-8" />
+          </div>
+          <h3 className="font-heading font-extrabold text-base text-[#23241F]">
+            No Activity Yet
+          </h3>
+          <p className="text-xs text-[#23241F]/60 max-w-xs mx-auto">
+            Your laundry events, wash cycles, and wardrobe updates will automatically appear here.
+          </p>
         </div>
       ) : (
         <div className="relative pl-6 space-y-4 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#23241F]/15">

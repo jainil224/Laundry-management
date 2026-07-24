@@ -12,6 +12,7 @@ import { Collect } from './pages/Collect';
 import { ActivityLog } from './pages/ActivityLog';
 import { Account } from './pages/Account';
 import { Support } from './pages/Support';
+import { NotificationManager } from './components/NotificationManager';
 
 function MainApp() {
   const { firebaseUser, authLoading, isOnboarded, getReadyBatchesCount } = useApp();
@@ -60,6 +61,7 @@ function MainApp() {
   // 4. STEP 3: Main Website Application
   return (
     <div className="min-h-screen bg-[#F4F4F5] text-black font-sans flex flex-col selection:bg-black selection:text-white">
+      <NotificationManager />
       {/* Header Bar */}
       <Header onNavigate={(r) => setCurrentRoute(r)} />
 
