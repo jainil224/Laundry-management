@@ -109,18 +109,18 @@ export const SubmitWash: React.FC<SubmitWashProps> = ({ onNavigate }) => {
   }
 
   return (
-    <div className="h-[calc(100vh-160px)] max-h-[620px] flex flex-col justify-between overflow-hidden">
+    <div className="flex flex-col space-y-6 py-2">
       {/* Sub-Title */}
-      <div className="px-1 pt-1 pb-2">
+      <div className="px-1">
         <h1 className="font-extrabold text-xl text-black tracking-tight">
           Clothes for washing
         </h1>
       </div>
 
       {/* Fixed Center Content Area */}
-      <div className="flex-1 flex flex-col items-center justify-center my-auto overflow-hidden">
+      <div className="flex-1 flex flex-col items-center justify-center py-10">
         {selectedItemIds.length > 0 ? (
-          <div className="w-full space-y-4 max-h-full overflow-y-auto px-1">
+          <div className="w-full space-y-4 px-1">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold font-mono text-neutral-600 uppercase">
                 {selectedItemIds.length} CLOTHES SELECTED
@@ -166,10 +166,10 @@ export const SubmitWash: React.FC<SubmitWashProps> = ({ onNavigate }) => {
           </div>
         ) : (
           /* Center "+ Select Clothes" Button */
-          <div className="text-center space-y-4 my-auto">
+          <div className="text-center py-14 space-y-4">
             <button
               onClick={() => setIsSelectModalOpen(true)}
-              className="inline-flex items-center gap-2 bg-black text-white font-bold text-base px-6 py-3.5 rounded-2xl border border-neutral-800 hover:bg-neutral-900 active:scale-95 transition-all shadow-md"
+              className="inline-flex items-center gap-2 bg-black text-white font-bold text-base px-7 py-4 rounded-2xl border border-neutral-800 hover:bg-neutral-900 active:scale-95 transition-all shadow-lg"
             >
               <Plus className="w-5 h-5 stroke-[2.5]" />
               <span>Select Clothes</span>
