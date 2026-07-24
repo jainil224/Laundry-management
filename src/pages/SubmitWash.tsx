@@ -216,8 +216,12 @@ export const SubmitWash: React.FC<SubmitWashProps> = ({ onNavigate }) => {
               {/* 3-Column Photo Grid with Top-Left Square Checkboxes */}
               {availableClothes.length === 0 ? (
                 <div className="py-12 text-center space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-black text-white mx-auto flex items-center justify-center">
-                    <Sparkles className="w-6 h-6" />
+                  <div className="w-24 h-24 mx-auto flex items-center justify-center">
+                    <img 
+                      src="https://res.cloudinary.com/ju7wkm1y/image/upload/v1784869572/hangers-cut-out-Photoroom_yx8pn4.png" 
+                      alt="No clothes available" 
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                   <h4 className="font-bold text-sm text-black">
                     No Clothes Available

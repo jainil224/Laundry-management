@@ -38,12 +38,56 @@ function MainApp() {
     setCurrentRoute('home');
   };
 
-  // 1. Show Spinner while checking Firebase Auth state
+  // 1. Show Premium Loading Screen with Brand Image while checking Firebase Auth state
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center space-y-3 font-sans">
-        <div className="w-8 h-8 border-3 border-white/20 border-t-white rounded-full animate-spin" />
-        <span className="text-xs font-mono text-neutral-400">Initializing Laundrify Cloud...</span>
+      <div className="min-h-screen w-full bg-gradient-to-b from-[#09090B] via-[#18181B] to-[#000000] flex flex-col items-center justify-between p-6 relative overflow-hidden text-white font-sans">
+        {/* Ambient Top & Bottom Glows */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-black/40 blur-3xl pointer-events-none" />
+
+        {/* Top Empty Spacer */}
+        <div className="h-4" />
+
+        {/* Center Hero Brand Card & Spinner */}
+        <div className="w-full max-w-[420px] flex flex-col items-center text-center space-y-6 z-10 my-auto">
+          {/* Glowing Brand Image Emblem */}
+          <div className="relative group">
+            <div className="absolute -inset-2 rounded-full bg-white/25 blur-xl animate-pulse" />
+            <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-white/10 backdrop-blur-md border-4 border-white/80 ring-4 ring-black/40 flex items-center justify-center p-3 shadow-2xl overflow-hidden">
+              <img
+                src="https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png"
+                alt="Laundrify Cloud Loading"
+                className="w-full h-full object-contain drop-shadow-2xl animate-pulse"
+              />
+            </div>
+          </div>
+
+          {/* Brand Name & Tagline */}
+          <div className="space-y-1.5">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-md">
+              Laundrify
+            </h1>
+            <p className="text-neutral-400 text-xs font-medium tracking-wide">
+              Smart Hostel Laundry & Wardrobe Manager
+            </p>
+          </div>
+
+          {/* Spinner & Loading Bar */}
+          <div className="flex flex-col items-center space-y-3 pt-2">
+            <div className="flex items-center space-x-3 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/15 shadow-inner">
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span className="text-xs font-mono font-semibold text-neutral-200 tracking-wider">
+                Initializing Laundrify Cloud...
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer info */}
+        <div className="text-[11px] font-mono text-neutral-500 text-center pb-2 z-10">
+          Laundrify v2.4
+        </div>
       </div>
     );
   }
@@ -66,7 +110,7 @@ function MainApp() {
       <Header onNavigate={(r) => setCurrentRoute(r)} />
 
       {/* Main Content View Container */}
-      <main className="flex-1 max-w-[480px] w-full mx-auto p-4 pt-3 pb-24 relative">
+      <main className="flex-1 max-w-[440px] w-full mx-auto p-4 pt-3 pb-24 relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentRoute}

@@ -87,36 +87,50 @@ export const NotificationManager: React.FC = () => {
     <AnimatePresence>
       {showPrompt && (
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 50 }}
-          className="fixed bottom-20 left-4 right-4 z-50 bg-black text-white rounded-2xl p-4 shadow-2xl border border-white/20 flex flex-col space-y-3"
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 40, scale: 0.95 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+          className="fixed bottom-24 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-[420px] z-[60] bg-black/95 text-white rounded-3xl p-5 shadow-2xl border border-white/20 flex flex-col space-y-3.5 backdrop-blur-xl"
         >
           <button 
             onClick={() => setShowPrompt(false)}
-            className="absolute top-2 right-2 p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            className="absolute top-3.5 right-3.5 p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors"
+            aria-label="Close notification prompt"
           >
             <X className="w-4 h-4" />
           </button>
           
-          <div className="flex items-start space-x-3 pr-6">
-            <div className="w-10 h-10 rounded-full bg-[#6C7BFF] flex-shrink-0 flex items-center justify-center shadow-lg">
+          <div className="flex items-start space-x-3.5 pr-6">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#6C7BFF] to-[#4F5DFF] flex-shrink-0 flex items-center justify-center shadow-lg border border-white/20">
               <BellRing className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h4 className="font-extrabold text-sm">Laundry Reminders</h4>
-              <p className="text-xs text-white/70 mt-1 leading-relaxed">
-                Get notified on Mondays and Thursdays at 5 PM to collect & submit your laundry.
+              <h4 className="font-extrabold text-sm text-white tracking-tight flex items-center gap-1.5">
+                <span>Laundry Reminders</span>
+                <span className="text-[9px] bg-white/15 px-2 py-0.5 rounded-full font-mono text-white/80">MON & THU</span>
+              </h4>
+              <p className="text-xs text-neutral-300 mt-1 leading-relaxed">
+                Get notified on Mondays & Thursdays at 5:00 PM to collect & submit your laundry on time.
               </p>
             </div>
           </div>
           
-          <button
-            onClick={requestPermission}
-            className="w-full py-2.5 bg-white text-black font-bold text-xs rounded-xl shadow-md active:scale-95 transition-transform"
-          >
-            Allow Notifications
-          </button>
+          <div className="flex items-center gap-2 pt-0.5">
+            <button
+              onClick={requestPermission}
+              className="flex-1 py-3 bg-white hover:bg-neutral-100 text-black font-extrabold text-xs rounded-2xl shadow-lg active:scale-98 transition-all flex items-center justify-center space-x-2"
+            >
+              <BellRing className="w-4 h-4 text-black fill-black" />
+              <span>Allow Notifications</span>
+            </button>
+            <button
+              onClick={() => setShowPrompt(false)}
+              className="px-4 py-3 bg-white/10 hover:bg-white/15 text-white font-semibold text-xs rounded-2xl active:scale-98 transition-all"
+            >
+              Later
+            </button>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
