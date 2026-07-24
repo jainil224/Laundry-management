@@ -7,7 +7,7 @@ interface LoginProps {
   onLogin: () => void;
 }
 
-const BRAND_LOGO_URL = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png';
+const BRAND_LOGO_URL = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784836807/ChatGPT_Image_Jul_24_2026_01_28_20_AM_1_mqcgeb.png';
 
 export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const { signInWithGoogle, signUpWithEmail, signInWithEmail } = useApp();
@@ -85,13 +85,12 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
         className="w-full max-w-[440px] pt-8 sm:pt-12 flex flex-col items-center text-center space-y-3 z-10"
       >
         {/* Perfect Circle Logo Emblem */}
-        <div className="relative group">
-          <div className="absolute -inset-1 rounded-full bg-white/30 blur-md group-hover:opacity-100 transition duration-500" />
-          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-white shadow-2xl border-4 border-white/80 ring-4 ring-black/20 flex items-center justify-center overflow-hidden">
+        <div className="relative group flex items-center justify-center">
+          <div className="w-36 h-36 sm:w-40 sm:h-40 flex items-center justify-center">
             <img
               src={BRAND_LOGO_URL}
               alt="Laundrify Logo"
-              className="w-full h-full object-contain p-1"
+              className="w-full h-full object-contain drop-shadow-2xl scale-110"
             />
           </div>
         </div>

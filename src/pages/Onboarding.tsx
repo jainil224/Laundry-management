@@ -7,7 +7,7 @@ interface OnboardingProps {
   onComplete: () => void;
 }
 
-const ONBOARDING_HEADER_IMAGE = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png';
+const ONBOARDING_HEADER_IMAGE = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784836807/ChatGPT_Image_Jul_24_2026_01_28_20_AM_1_mqcgeb.png';
 
 export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const { completeOnboarding, user, firebaseUser } = useApp();
@@ -62,11 +62,11 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
         className="w-full max-w-[440px] pt-4 flex flex-col items-center text-center space-y-3 z-10"
       >
         {/* Custom Cloudinary Image Emblem */}
-        <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white p-2 shadow-2xl border-4 border-white/60 ring-4 ring-black/20 flex items-center justify-center overflow-hidden">
+        <div className="w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center">
           <img
             src={ONBOARDING_HEADER_IMAGE}
             alt="Room Setup Tag"
-            className="w-full h-full object-contain p-1"
+            className="w-full h-full object-contain drop-shadow-xl scale-110"
           />
         </div>
 

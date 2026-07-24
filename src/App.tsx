@@ -52,13 +52,12 @@ function MainApp() {
         {/* Center Hero Brand Card & Spinner */}
         <div className="w-full max-w-[420px] flex flex-col items-center text-center space-y-6 z-10 my-auto">
           {/* Glowing Brand Image Emblem */}
-          <div className="relative group">
-            <div className="absolute -inset-2 rounded-full bg-white/25 blur-xl animate-pulse" />
-            <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-white/10 backdrop-blur-md border-4 border-white/80 ring-4 ring-black/40 flex items-center justify-center p-3 shadow-2xl overflow-hidden">
-              <img
-                src="https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png"
-                alt="Laundrify Cloud Loading"
-                className="w-full h-full object-contain drop-shadow-2xl animate-pulse"
+          <div className="relative group flex items-center justify-center mb-6">
+            <div className="w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center animate-pulse">
+              <img 
+                src="https://res.cloudinary.com/ju7wkm1y/image/upload/v1784836807/ChatGPT_Image_Jul_24_2026_01_28_20_AM_1_mqcgeb.png" 
+                alt="Brand Logo" 
+                className="w-full h-full object-contain drop-shadow-2xl scale-125"
               />
             </div>
           </div>

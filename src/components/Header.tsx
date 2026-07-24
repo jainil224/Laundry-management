@@ -9,7 +9,7 @@ interface HeaderProps {
   onNavigate?: (route: string) => void;
 }
 
-const BRAND_LOGO_URL = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784829453/ChatGPT_Image_Jul_23_2026_11_27_17_PM_x1k4uv.png';
+const BRAND_LOGO_URL = 'https://res.cloudinary.com/ju7wkm1y/image/upload/v1784836807/ChatGPT_Image_Jul_24_2026_01_28_20_AM_1_mqcgeb.png';
 
 export const Header: React.FC<HeaderProps> = ({ title, showBack, onBack, onNavigate }) => {
   const { user, getReadyBatchesCount } = useApp();
@@ -33,12 +33,12 @@ export const Header: React.FC<HeaderProps> = ({ title, showBack, onBack, onNavig
               onClick={() => onNavigate && onNavigate('home')}
               className="flex items-center space-x-3 cursor-pointer group select-none"
             >
-              {/* Perfect Circle Logo Emblem */}
-              <div className="w-10 h-10 rounded-full bg-white shadow-lg group-hover:scale-105 transition-transform overflow-hidden ring-2 ring-white/80 flex items-center justify-center shrink-0">
+              {/* Raw Logo Emblem (No white circle background) */}
+              <div className="w-14 h-14 group-hover:scale-105 transition-transform flex items-center justify-center shrink-0">
                 <img
                   src={BRAND_LOGO_URL}
                   alt="Laundrify Logo"
-                  className="w-full h-full object-contain p-0.5"
+                  className="w-full h-full object-contain drop-shadow-md scale-125"
                 />
               </div>
               <div className="flex flex-col">
