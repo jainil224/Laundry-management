@@ -161,7 +161,7 @@ export const Wardrobe: React.FC<WardrobeProps> = ({ onNavigate }) => {
   });
 
   return (
-    <div className="space-y-4 pb-24">
+    <div className="space-y-4 pb-4">
       {/* Top Header Bar */}
       <div className="flex items-center justify-between pt-1 pb-1">
         <div className="flex items-center gap-2">

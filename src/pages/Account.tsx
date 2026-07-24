@@ -60,7 +60,7 @@ export const Account: React.FC<AccountProps> = ({ onNavigate, onOpenOnboarding }
   const firstInitial = displayName.charAt(0).toUpperCase();
 
   return (
-    <div className="space-y-4 pb-24">
+    <div className="space-y-4 pb-4">
       {/* Profile Header Card */}
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-neutral-200 space-y-4">
         <div className="flex items-center space-x-4">

@@ -106,7 +106,7 @@ export const Collect: React.FC<CollectProps> = ({ onNavigate }) => {
   }, [batches, selectedMonth, sortOrder]);
 
   return (
-    <div className="space-y-4 pb-24">
+    <div className="space-y-4 pb-4">
       {/* Navigation Tabs (In Wash & History) */}
       <div className="flex rounded-2xl bg-white p-1 border border-neutral-200 shadow-xs">
         <button

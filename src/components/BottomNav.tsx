@@ -46,7 +46,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
               stroke="rgba(0,0,0,0.06)"
               strokeWidth="1.2"
               animate={{
-                d: `M 0 0 L ${activeCx - 42} 0 C ${activeCx - 25} 0, ${activeCx - 22} 32, ${activeCx} 32 C ${activeCx + 22} 32, ${activeCx + 26} 0, ${activeCx + 42} 0 L 400 0 L 400 70 L 0 70 Z`,
+                d: `M 0 16 Q 0 0 16 0 L ${activeCx - 42} 0 C ${activeCx - 25} 0, ${activeCx - 22} 32, ${activeCx} 32 C ${activeCx + 22} 32, ${activeCx + 26} 0, ${activeCx + 42} 0 L 384 0 Q 400 0 400 16 L 400 70 L 0 70 Z`,
               }}
               transition={{
                 type: 'spring',

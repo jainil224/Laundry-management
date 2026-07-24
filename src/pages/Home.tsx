@@ -20,7 +20,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const avatarUrl = user?.profilePhotoUrl;
 
   return (
-    <div className="space-y-6 pb-24">
+    <div className="space-y-6 pb-4">
 
       {/* ── Hero Banner (Black & White Theme) ── */}
       <motion.div

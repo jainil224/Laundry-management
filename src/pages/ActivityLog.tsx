@@ -57,7 +57,7 @@ export const ActivityLog: React.FC<ActivityLogProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="space-y-4 pb-24">
+    <div className="space-y-4 pb-4">
       {/* Page Header */}
       <div className="bg-[#23241F] text-[#F7F5F1] rounded-3xl p-5 shadow-lg border border-white/10">
         <div className="flex items-center space-x-3.5">

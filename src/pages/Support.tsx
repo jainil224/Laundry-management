@@ -50,7 +50,7 @@ export const Support: React.FC<SupportProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="space-y-4 pb-24">
+    <div className="space-y-4 pb-4">
       {/* Banner */}
       <div className="bg-[#E39DF0] text-[#23241F] rounded-2xl p-5 shadow-sm">
         <div className="flex items-center justify-between">
