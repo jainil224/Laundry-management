@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Edit3, Save, RotateCcw, Check, LogOut, LogIn, Cloud, UserCheck, Sparkles, Building, Hash, User as UserIcon } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import BorderGlow from '../components/BorderGlow';
 
 interface AccountProps {
   onNavigate: (route: string) => void;
@@ -64,29 +65,40 @@ export const Account: React.FC<AccountProps> = ({ onNavigate, onOpenOnboarding }
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-neutral-200 space-y-4">
         <div className="flex items-center space-x-4">
           {/* Avatar emblem */}
-          <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-black shadow-md flex-shrink-0 bg-black text-white flex items-center justify-center font-extrabold text-2xl">
-            {user?.profilePhotoUrl || firebaseUser?.photoURL ? (
-              <img
-                src={user?.profilePhotoUrl || firebaseUser?.photoURL}
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <span>{firstInitial}</span>
-            )}
+          <div className="flex-shrink-0">
+            <BorderGlow
+              borderRadius={16}
+              glowRadius={15}
+              glowIntensity={0.8}
+              animated={true}
+              backgroundColor="#000000"
+              className="w-16 h-16 flex items-center justify-center p-0 shadow-md"
+            >
+              {user?.profilePhotoUrl || firebaseUser?.photoURL ? (
+                <img
+                  src={user?.profilePhotoUrl || firebaseUser?.photoURL}
+                  alt="Profile"
+                  className="w-full h-full object-cover rounded-2xl"
+                />
+              ) : (
+                <span className="text-white text-2xl font-extrabold w-full h-full flex items-center justify-center rounded-2xl">
+                  {firstInitial}
+                </span>
+              )}
+            </BorderGlow>
           </div>
 
-          <div className="flex-1">
-            <div className="flex items-center space-x-2">
-              <span className="bg-black text-white px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold">
-                Room Number - {user?.roomNumber || '207'}
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="bg-black text-white px-3 py-1 rounded-lg text-[10px] sm:text-[11px] font-mono font-bold whitespace-nowrap shadow-md border border-neutral-800 tracking-wide">
+                ROOM NUMBER - {user?.roomNumber || '207'}
               </span>
-              <span className="text-xs font-mono font-bold text-neutral-500 uppercase">
-                {user?.floorNumber ? `Floor Number - ${user.floorNumber}` : 'Floor Number - 1'}
+              <span className="bg-neutral-100 text-black px-3 py-1 rounded-lg text-[10px] sm:text-[11px] font-mono font-extrabold uppercase whitespace-nowrap shadow-sm border border-neutral-200 tracking-wide">
+                {user?.floorNumber ? `FLOOR NUMBER - ${user.floorNumber}` : 'FLOOR NUMBER - 1'}
               </span>
             </div>
 
-            <h2 className="font-extrabold text-xl text-black mt-1 tracking-tight">
+            <h2 className="font-extrabold text-xl text-black mt-1.5 tracking-tight truncate">
               {displayName}
             </h2>
           </div>
